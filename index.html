@@ -71,12 +71,35 @@
     box-shadow: 0 4px 16px rgba(99,102,241,0.25);
   }
   .q {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
     font-size: 14.5px;
     font-weight: 700;
     color: #14151a;
     line-height: 1.32;
     margin-bottom: 8px;
   }
+  .q-text { flex: 1; }
+  .info-btn {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: #e5e7eb;
+    color: #4b5563;
+    font-size: 12px;
+    font-weight: 800;
+    font-style: italic;
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 20px;
+    text-align: center;
+    padding: 0;
+    cursor: pointer;
+    margin-top: 1px;
+  }
+  .info-btn:hover { background: #c7cbd4; color: #14151a; }
   .qnum {
     color: inherit;
     text-decoration: none;
@@ -184,6 +207,100 @@
     opacity: 1;
     transform: translate(-50%, 0);
   }
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20,21,26,0.5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 2000;
+  }
+  .modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal-panel {
+    background: #ffffff;
+    border-radius: 18px 18px 0 0;
+    max-width: 520px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px 20px 24px;
+    transform: translateY(16px);
+    transition: transform 0.2s;
+    box-shadow: 0 -8px 30px rgba(0,0,0,0.2);
+  }
+  .modal-overlay.show .modal-panel { transform: translateY(0); }
+  @media (min-width: 700px) {
+    .modal-overlay { align-items: center; padding: 20px; }
+    .modal-panel { border-radius: 18px; transform: translateY(8px) scale(0.98); }
+    .modal-overlay.show .modal-panel { transform: translateY(0) scale(1); }
+  }
+  .modal-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .modal-label {
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .modal-question {
+    font-size: 16px;
+    font-weight: 700;
+    color: #14151a;
+    line-height: 1.4;
+  }
+  .modal-close {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #f3f4f6;
+    color: #4b5563;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .modal-close:hover { background: #e5e7eb; color: #14151a; }
+  .modal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 12px 14px;
+    background: #f7f8fa;
+    border-radius: 12px;
+    margin-top: 4px;
+  }
+  .modal-meta-item { font-size: 12.5px; color: #3f4451; }
+  .modal-meta-item b {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .modal-meta-item a {
+    color: #4338ca;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .modal-meta-item a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -211,61 +328,71 @@
   </div>
   
 <div class="card" id="q12">
-  <div class="q"><a class="qnum" href="#q12">#12</a>&nbsp; Технічний стан даху, підвалу та фасаду</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q12">#12</a>&nbsp; Технічний стан даху, підвалу та фасаду</span><button class="info-btn" type="button" data-target="q12" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Який поточний технічний стан даху, підвалу та фасаду?</div><div class="full-author">Юрій</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a"><b>Дах</b>: Візуальний огляд проводиться регулярно мінімум один раз на рік.<br>У випадку отримання заявки ремонтні роботи виконуються оперативно<br>Останній огляд проводився в серпні<br><br><b>Підвал</b>: в підвалі працюють робітники, огляд проводиться щоденно.<br>Останні роботи були по ремонту приямків на кінець весни/початок літа<br><br><b>Пожежні балкони</b>. Було зроблено ремонт торців балконів 2,5 секцій, після загибелі «нашого альпініста» на іншому об'єкті роботи зупинені. Ведуться переговори по поновленню робіт<br><br><b>Двері на пожежні балкони</b>. Закуплено всі необхідні матеріали, роботи по фарбуванню дверей вже почались</div>
 </div>
 
 <div class="card" id="q13">
-  <div class="q"><a class="qnum" href="#q13">#13</a>&nbsp; Коли був капітальний/поточний ремонт і що ремонтували</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q13">#13</a>&nbsp; Коли був капітальний/поточний ремонт і що ремонтували</span><button class="info-btn" type="button" data-target="q13" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Коли востаннє проводився капітальний/поточний ремонт? Що саме ремонтувалось</div><div class="full-author">Юрій</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-monitoring">НА КОНТРОЛІ</span></div>
   <div class="a"><b>Поточний ремонт</b> проводиться регулярно, в залежності від виявлених проблем (замінена освітлення на 1х поверхах, заміна тротуарної плитки (ФЕМ) в 9 точках, заміна всіх доводчиків на всіх зовнішніх дверях в будинок, покраска паркану, покраска бордюров, поновлення пішоходного переходу тощо)<br><br><b>Капітальний ремонт</b> передбачає втручання в несучі конструкції та загальні інженерні системи. Потребує призупинення експлуатації будівлі (відселення мешканців)</div>
 </div>
 
 <div class="card" id="q14">
-  <div class="q"><a class="qnum" href="#q14">#14</a>&nbsp; Відомі дефекти інженерних мереж і плани усунення</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q14">#14</a>&nbsp; Відомі дефекти інженерних мереж і плани усунення</span><button class="info-btn" type="button" data-target="q14" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи є відомі дефекти інженерних мереж (вода, каналізація, опалення)? Якщо так - які дії заплановані, від чого залежить виправлення вказаних дефектів</div><div class="full-author">Юрій</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-monitoring">НА КОНТРОЛІ</span><span class="badge status-unresolved">НЕМАЄ РІШЕННЯ</span></div>
   <div class="a"><u>Дві відомі проблеми:</u><br><br>1) <u>постійне ржавіння труб, як загальних так і в квартирах</u>. При кожному виявленому випадку проводяться зварювальні роботи<br><br>2) <u>в деяких з відгалужень стояків (гребенка) гаряча вода стає холодною</u>.<br>Причина незрозуміла, проводився аудит тією ж компанією, яка встановлювала систему - проблеми визначити не змогли. Лікується виключно прогоном всього стояка і має тимчасовий характер.<br>Можлива проблема - що мешканці наробили гарячих підлог від стояків. Виявити ці факти ККК не має можливості</div>
 </div>
 
 <div class="card" id="q15">
-  <div class="q"><a class="qnum" href="#q15">#15</a>&nbsp; Перевірка вентиляційних каналів і димоходів</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q15">#15</a>&nbsp; Перевірка вентиляційних каналів і димоходів</span><button class="info-btn" type="button" data-target="q15" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи проводиться перевірка вентиляційних каналів та димоходів? Якщо так - то коли останній раз, які результати</div><div class="full-author">Юрій</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Димоходів у будинку немає<br>Вентиляційні канали не перевіряються за відсутності необхідності</div>
 </div>
 
 <div class="card" id="q17">
-  <div class="q"><a class="qnum" href="#q17">#17</a>&nbsp; Ремонт плитки на сходах</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q17">#17</a>&nbsp; Ремонт плитки на сходах</span><button class="info-btn" type="button" data-target="q17" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи планується ремонт (демонтаж-монтаж) плитки на сходах (зокрема, цікавить 1 секція). <br>За зиму покриття сходів сильно пошкодилось, плитка валяється по всіх сходах, поскладена по кутках. Чи буде її хтось відновлювати?</div><div class="full-author">Natalia G</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span></div>
   <div class="a">Всі плитки на сходах замінені / виправлені</div>
 </div>
 
 <div class="card" id="q18">
-  <div class="q"><a class="qnum" href="#q18">#18</a>&nbsp; Ржаві труби в підвалі — ремонт</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q18">#18</a>&nbsp; Ржаві труби в підвалі — ремонт</span><button class="info-btn" type="button" data-target="q18" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Рік-два назад публікувалися відео труб в підвалі. Труби виглядали ржавими і з подтеками.<br>Чи заплановано ремонт / проведення тех.обсуговування труб<br>Якщо так - то який саме дії заплановано і на коли<br>Якщо ні - то по якій причині</div><div class="full-author">T M (<a href="https://t.me/t_moskovchyk" target="_blank" rel="noopener">@t_moskovchyk</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-monitoring">НА КОНТРОЛІ</span></div>
   <div class="a">При кожному виявленому випадку проводяться зварювальні роботи.<br>«Наш» зварювальник по основному місцю роботи працює ДСНС (пожежники). Він чудово розбирається в питанні і ситуація під його контролем</div>
 </div>
 
 <div class="card" id="q23">
-  <div class="q"><a class="qnum" href="#q23">#23</a>&nbsp; Фарбування дверей біля ліфтів на поверхах</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q23">#23</a>&nbsp; Фарбування дверей біля ліфтів на поверхах</span><button class="info-btn" type="button" data-target="q23" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Двері біля ліфтів на поверхах вже покрилися іржою. Чи запланована покраска, якщо так - то на коли. Якщо ні - то що заважає?</div><div class="full-author">Valerii Romanskyi (<a href="https://t.me/romsky_v" target="_blank" rel="noopener">@romsky_v</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-inprogress">В РОБОТІ</span></div>
   <div class="a">Роботи почались 2 вересня. Всі матеріали для робіт закуплені</div>
 </div>
 
 <div class="card" id="q25">
-  <div class="q"><a class="qnum" href="#q25">#25</a>&nbsp; Чому немає доводчиків на дверях поверхів</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q25">#25</a>&nbsp; Чому немає доводчиків на дверях поверхів</span><button class="info-btn" type="button" data-target="q25" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чому не встановлені доводчики на дверях на поверхах?<br>Які є об'єктивні причини, що заважає? Якщо запланована заміна - то в якому місяці / при яких умовах?</div><div class="full-author">Юрій<br>Anna Beregova (<a href="https://t.me/baton_kit" target="_blank" rel="noopener">@baton_kit</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Проєктом будинку не передбачено доводчики на поверхах. На вхідних дверях доводчики встановлені.<br>Бюджет встановлення доводчиків на всіх поверхах - біля 3 млн грн</div>
 </div>
 
 <div class="card" id="q28">
-  <div class="q"><a class="qnum" href="#q28">#28</a>&nbsp; Часті спрацювання пожежної сигналізації (4 секція, 11 пов.)</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q28">#28</a>&nbsp; Часті спрацювання пожежної сигналізації (4 секція, 11 пов.)</span><button class="info-btn" type="button" data-target="q28" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Часто спрацьовує пожежна сигналізація - секція 4, поверх 11. В чому причина? Що необхідно зробити для виправлення ситуації?</div><div class="full-author">Anna Beregova (<a href="https://t.me/baton_kit" target="_blank" rel="noopener">@baton_kit</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-info">ІНФОРМАЦІЯ</span><span class="badge status-planned">В ПЛАНАХ</span></div>
   <div class="a">Нова протипожежна компанія провела аудит централізованої протипожежної системи протягом перших місяців 2026 року.<br><br>Всі системи працюють штатним чином. Все обладнання стеження за датчиками, відведення диму працюють.<br><br>Стан датчиків в квартирах наразі не контролюється. Є список квартир, в яких відсутній сигнал від датчиків, що впливає на роботу системи в цілому<br><br>Необхідно проведення аудиту по всім квартирам, виписка штрафів, примус до відновлення роботи датчиків в квартирах.<br>Для початку цих робіт потрібно великі ресурси і консенсус всього будинку</div>
 </div>
 
 <div class="card" id="q32">
-  <div class="q"><a class="qnum" href="#q32">#32</a>&nbsp; Чи є людина, що відповідає за територію і благоустрій</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q32">#32</a>&nbsp; Чи є людина, що відповідає за територію і благоустрій</span><button class="info-btn" type="button" data-target="q32" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи є людина в штаті, яка дивиться за територією нашого будинку? <br>За благоустроєм?<br>Як часто обходить поверхи, територію та доповідає директору про недоліки? Чи вносить пропозиції про покращення деяких моментів?</div><div class="full-author">Mariia Bozhkova</div><div class="full-date">10.03.2026</div></div>
   <div class="badges"><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Окремої виділеної людини не передбачено<br>Кожен фахівець (електрик, ліфтер тощо) відповідає за свій участок і проводить періодичний контроль.<br><br>Основний канал покращення стану - активна громадська позиція мешканців будинку - звертайтесь до диспетчера з вашими питаннями</div>
 </div>
@@ -279,38 +406,44 @@
   </div>
   
 <div class="card" id="q2">
-  <div class="q"><a class="qnum" href="#q2">#2</a>&nbsp; Модернізація СКД для роботи без світла</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q2">#2</a>&nbsp; Модернізація СКД для роботи без світла</span><button class="info-btn" type="button" data-target="q2" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Як і коли планується модернізація СКД СКД для роботи під час відключень світла</div><div class="full-author">Дмитро Г (<a href="https://t.me/TouristXXL" target="_blank" rel="noopener">@TouristXXL</a>)</div><div class="full-date">27.02.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span></div>
   <div class="a">На кожній секції на всі двері встановлені сучасні акумулятори на вхідних дверях<br>Тримає 4-5 годин без світла (залежить від інтенсивності входу/виходу)<br>На калітку акумулятор не встановлено, тому що немає куди поставити акумулятор (на дверях є місце).<br>Проводити туди кабель від акумулятор недоцільно</div>
 </div>
 
 <div class="card" id="q3">
-  <div class="q"><a class="qnum" href="#q3">#3</a>&nbsp; Контроль доступу на територію без світла й з піднятим шлагбаумом</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q3">#3</a>&nbsp; Контроль доступу на територію без світла й з піднятим шлагбаумом</span><button class="info-btn" type="button" data-target="q3" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Очікуємо пропозиції по контролю доступу на територію при відсутності світла і піднятому шлагбауму, наприклад:<br>1) закрита хвіртка біля Коло - або встановлення акумуляторів для магніту і СКД<br>2) замість шлагбауму - натягнута мотузка, яку охоронець опускає / піднімає вручну<br>3) чи планується додатковий контроль пропуску на паркінг - без світла охорони взагалі немає, при наявності світла стан контролю незрозумілий<br>4) .... Якісь інші пропозиції<br><br>Якщо потрібні якісь додаткові умови для покращення контролю - прохання сформювати причини / умови при яких цей контроль стане більш якісним</div><div class="full-author">Дмитро Г (<a href="https://t.me/TouristXXL" target="_blank" rel="noopener">@TouristXXL</a>)</div><div class="full-date">27.02.2026</div></div>
   <div class="badges"><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">По закону під час тривоги мають бути відкриті як шлагбаум так і калітки.<br><br>Паркінг вважається зоною укриття і будь-хто повинен мати доступ до укриття - ніхто немає права встановити будь-які обмеження<br>З дітьми взагалі нічого зробити неможливо - це відповідальність батьків, якщо діти щось пошкодять - викликати поліцію і через суд призначати відшкодування</div>
 </div>
 
 <div class="card" id="q4">
-  <div class="q"><a class="qnum" href="#q4">#4</a>&nbsp; Чи можна повісити «штору» під шлагбаумом</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q4">#4</a>&nbsp; Чи можна повісити «штору» під шлагбаумом</span><button class="info-btn" type="button" data-target="q4" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Що заважає повішати "штору" під шлагбаумом, щоб на подвір'я безконтрольно не проходили посторонні (до речі, на вхід в К3 така штора, здається, висить)</div><div class="full-author">Дмитро Г (<a href="https://t.me/TouristXXL" target="_blank" rel="noopener">@TouristXXL</a>)</div><div class="full-date">27.02.2026</div></div>
   <div class="badges"><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Штора на шлагбаум - не працює.<br>Досвід К3 виявив такі проблеми: парусність, навантаження на шлагбаум, штора ломається/ломають</div>
 </div>
 
 <div class="card" id="q5">
-  <div class="q"><a class="qnum" href="#q5">#5</a>&nbsp; Централізований список авто для проїзду</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q5">#5</a>&nbsp; Централізований список авто для проїзду</span><button class="info-btn" type="button" data-target="q5" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи існує централізований список авто у охорони, по яким виконується пропуск на територію<br>Прохання озвучити правила, по яким охорона приймає рішення - чи дозволено авто проїзд на територію</div><div class="full-author">Дмитро Г (<a href="https://t.me/TouristXXL" target="_blank" rel="noopener">@TouristXXL</a>)</div><div class="full-date">27.02.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Централізований список присутній, охорона перевіряє візуально і по списку, якщо авто візуально не пам'ятають і немає в списку - питають перепустку<br>Існує чат-бот в вайбері, де охоронці можуть перевіряти наявність номеру в списку<br>Всі випадки "конфліктних водіїв", які скандалять і погрожують охороні, фіксуються в окремому журналі.
   <br>Впливу на таких водіїв охорона по законам України не має. Готові розглянути розумні пропозиції</div>
 </div>
 
 <div class="card" id="q30">
-  <div class="q"><a class="qnum" href="#q30">#30</a>&nbsp; Перенести хвіртку біля шлагбауму ближче до Коло</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q30">#30</a>&nbsp; Перенести хвіртку біля шлагбауму ближче до Коло</span><button class="info-btn" type="button" data-target="q30" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи можливо перенести хвіртку біля шлагбауму на сторону, яка ближче до Коло - щоб люди не переходили дорогу перед машинами<br>Якщо так - що для цього потрібно, Якщо ні - то по якій причині так зробити не можна</div><div class="full-author">✨Masha (<a href="https://t.me/Mari_Shkraba" target="_blank" rel="noopener">@Mari_Shkraba</a>)</div><div class="full-date">09.03.2026</div></div>
   <div class="badges"><span class="badge status-postponed">ВІДКЛАДЕНО</span><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">На запит мешканців, встановлено і підключено до СКД нову хвіртку справа від шлагбауму (ближче до будинку).<br><br>В сторону дитячого майданчика (2 вихід Коло) роботи проводити недоцільно в зв'язку з 1) відстуність візуального контролю охорони 2) великий обсяг робіт по проведенню комунікацій, живлення тощо</div>
 </div>
 
 <div class="card" id="q31">
-  <div class="q"><a class="qnum" href="#q31">#31</a>&nbsp; Відкриття хвіртки до дитячого майданчика в сквері</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q31">#31</a>&nbsp; Відкриття хвіртки до дитячого майданчика в сквері</span><button class="info-btn" type="button" data-target="q31" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи не планується відкриття хвіртки до дитячого майданчика, той що знаходиться в сквері ?</div><div class="full-author">Anhelina (<a href="https://t.me/aosinnya" target="_blank" rel="noopener">@aosinnya</a>)</div><div class="full-date">09.03.2026</div></div>
   <div class="badges"><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Ні, не планується</div>
 </div>
@@ -324,49 +457,57 @@
   </div>
   
 <div class="card" id="q16">
-  <div class="q"><a class="qnum" href="#q16">#16</a>&nbsp; Не працює рушникосушка (2 секція, 7 поверх)</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q16">#16</a>&nbsp; Не працює рушникосушка (2 секція, 7 поверх)</span><button class="info-btn" type="button" data-target="q16" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Не працює сушилка для рушників (2 секція, 7 поверх). <br>Звернення до сантехніка та Олена Олімповни не допомагають - пропонують запросити зовнішних сантехніків, а зовнішні кажуть, що недостатній тиск води в стояку</div><div class="full-author">Юрій</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">По стояку гаряча вода до квартири підходить (труба гаряча). Скоріше за все проблема всередині квартири, причини не виявлені</div>
 </div>
 
 <div class="card" id="q21">
-  <div class="q"><a class="qnum" href="#q21">#21</a>&nbsp; Не працює стояк гарячої води — секція 4</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q21">#21</a>&nbsp; Не працює стояк гарячої води — секція 4</span><button class="info-btn" type="button" data-target="q21" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">З літа 2025 не працює стояк гарячої води - секція 4 (кв. 472, 512, 522, 527, наліво від входу з ліфта).<br>Які плани по ремонту? Що заважає / які є об'єктивні причини, що ремонт не виконано протягом півроку</div><div class="full-author">Valerii Romanskyi (<a href="https://t.me/romsky_v" target="_blank" rel="noopener">@romsky_v</a>)<br>Лєна (<a href="https://t.me/Polishchuk_Lena" target="_blank" rel="noopener">@Polishchuk_Lena</a>)<br>Vikutoru Za (<a href="https://t.me/VikutoruZa" target="_blank" rel="noopener">@VikutoruZa</a>)<br>Anna Beregova (<a href="https://t.me/baton_kit" target="_blank" rel="noopener">@baton_kit</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-unresolved">НЕМАЄ РІШЕННЯ</span></div>
   <div class="a">Причина незрозуміла, проводився аудит тією ж компанією, яка встановлювала систему - проблеми визначити не змогли. Лікується виключно прогоном всього стояка і має тимчасовий характер.<br><br><u><i>Можлива проблема</i></u> - що мешканці наробили гарячих підлог від стояків. Виявити ці факти ККК не має можливості</div>
 </div>
 
 <div class="card" id="q26">
-  <div class="q"><a class="qnum" href="#q26">#26</a>&nbsp; Чому треба довго спускати воду до гарячої</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q26">#26</a>&nbsp; Чому треба довго спускати воду до гарячої</span><button class="info-btn" type="button" data-target="q26" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чому потрібно 30 хвилин спускати гарячу воду, але не факт що вона буде гарячою?<br>Від чого / від кого це залежить, що необхідно зробити для виправлення ситуації?</div><div class="full-author">Лариса (<a href="https://t.me/L380930583184" target="_blank" rel="noopener">@L380930583184</a>)<br>Igor Igor (<a href="https://t.me/IhorKuzmyshyn" target="_blank" rel="noopener">@IhorKuzmyshyn</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-unresolved">НЕМАЄ РІШЕННЯ</span></div>
   <div class="a">Причина незрозуміла, проводився аудит тією ж компанією, яка встановлювала систему - проблеми визначити не змогли. Лікується виключно прогоном всього стояка і має тимчасовий характер.<br><br><u><i>Можлива проблема</i></u> - що мешканці наробили гарячих підлог від стояків. Виявити ці факти ККК не має можливості</div>
 </div>
 
 <div class="card" id="q27">
-  <div class="q"><a class="qnum" href="#q27">#27</a>&nbsp; Не циркулює гаряча вода — 4 секція, 2 контур</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q27">#27</a>&nbsp; Не циркулює гаряча вода — 4 секція, 2 контур</span><button class="info-btn" type="button" data-target="q27" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чому в 4-й секції 2-го контуру не циркулює гаряча вода, що необхідно зробити для виправлення?<br>На коли заплановани відповідні дії</div><div class="full-author">Igor Igor (<a href="https://t.me/IhorKuzmyshyn" target="_blank" rel="noopener">@IhorKuzmyshyn</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-unresolved">НЕМАЄ РІШЕННЯ</span></div>
   <div class="a">Причина незрозуміла, проводився аудит тією ж компанією, яка встановлювала систему - проблеми визначити не змогли. Лікується виключно прогоном всього стояка і має тимчасовий характер.<br><br><u><i>Можлива проблема</i></u> - що мешканці наробили гарячих підлог від стояків. Виявити ці факти ККК не має можливості</div>
 </div>
 
 <div class="card" id="q6">
-  <div class="q"><a class="qnum" href="#q6">#6</a>&nbsp; Коли запрацюють великий і пожежний ліфти у 2 секції</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q6">#6</a>&nbsp; Коли запрацюють великий і пожежний ліфти у 2 секції</span><button class="info-btn" type="button" data-target="q6" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Коли в 2 секції почнуть працювати великий і пожежний ліфти</div><div class="full-author">Олег Закревський (<a href="https://t.me/oleg_bzgroup" target="_blank" rel="noopener">@oleg_bzgroup</a>)</div><div class="full-date">27.02.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-monitoring">НА КОНТРОЛІ</span></div>
   <div class="a">Ремонт по всім ліфтам виконано, запчастини / канати поміняли<br>Тепер підтримка / регуляція виконується в робочому режимі</div>
 </div>
 
 <div class="card" id="q7">
-  <div class="q"><a class="qnum" href="#q7">#7</a>&nbsp; Коли запрацює великий ліфт у 3 секції</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q7">#7</a>&nbsp; Коли запрацює великий ліфт у 3 секції</span><button class="info-btn" type="button" data-target="q7" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Коли в 3 секції почне працювати великий ліфт</div><div class="full-author">Inga (<a href="https://t.me/Inga77777" target="_blank" rel="noopener">@Inga77777</a>)</div><div class="full-date">27.02.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-monitoring">НА КОНТРОЛІ</span></div>
   <div class="a">Ремонт по всім ліфтам виконано, запчастини / канати поміняли<br>Тепер підтримка / регуляція виконується в робочому режимі</div>
 </div>
 
 <div class="card" id="q8">
-  <div class="q"><a class="qnum" href="#q8">#8</a>&nbsp; Не працює ліфт у 4 секції</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q8">#8</a>&nbsp; Не працює ліфт у 4 секції</span><button class="info-btn" type="button" data-target="q8" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Не працює ліфт в 4 секції</div><div class="full-author"></div><div class="full-date">12.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-monitoring">НА КОНТРОЛІ</span></div>
   <div class="a">Ремонт по всім ліфтам виконано, запчастини / канати поміняли<br>Тепер підтримка / регуляція виконується в робочому режимі</div>
 </div>
 
 <div class="card" id="q24">
-  <div class="q"><a class="qnum" href="#q24">#24</a>&nbsp; Заміна поверхових екранів у ліфтах</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q24">#24</a>&nbsp; Заміна поверхових екранів у ліфтах</span><button class="info-btn" type="button" data-target="q24" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Екрани в ліфтах, що показують на якому поверсі ліфт, не працюють. Чи запланована заміна, на коли? Якщо ні - які є об'єктивні причини?</div><div class="full-author">Valerii Romanskyi (<a href="https://t.me/romsky_v" target="_blank" rel="noopener">@romsky_v</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-postponed">ВІДКЛАДЕНО</span><span class="badge status-monitoring">НА КОНТРОЛІ</span></div>
   <div class="a">Таких екранів немає в наявності (російського виробництва). Декілька років тому ми викупили останні що були на ринку. Коли з'являться - обов'язково поставимо.</div>
 </div>
@@ -380,55 +521,64 @@
   </div>
   
 <div class="card" id="q10">
-  <div class="q"><a class="qnum" href="#q10">#10</a>&nbsp; Ремонт дитячого майданчика цього сезону</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q10">#10</a>&nbsp; Ремонт дитячого майданчика цього сезону</span><button class="info-btn" type="button" data-target="q10" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи запланований на цей сезон ремонт дитячого майданчика</div><div class="full-author">Svitlana Yezernitska</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-postponed">ВІДКЛАДЕНО</span></div>
   <div class="a">Не заплановано</div>
 </div>
 
 <div class="card" id="q11">
-  <div class="q"><a class="qnum" href="#q11">#11</a>&nbsp; Плани по озелененню подвір&#x27;я</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q11">#11</a>&nbsp; Плани по озелененню подвір&#x27;я</span><button class="info-btn" type="button" data-target="q11" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Які плани по озеленню подвірря. Чи є розуміння - що саме і коли буде посаджено/зроблено</div><div class="full-author">Svitlana Yezernitska</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span></div>
   <div class="a">Робота садовника - це суб'єктивний момент, у кожного своє бачення.<br>Протягом літа були зустрічі з ініціативними мешканцями будинку і сформована спільна позиція</div>
 </div>
 
 <div class="card" id="q22">
-  <div class="q"><a class="qnum" href="#q22">#22</a>&nbsp; Стан інформаційних табличок і вивісок</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q22">#22</a>&nbsp; Стан інформаційних табличок і вивісок</span><button class="info-btn" type="button" data-target="q22" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Стан інформаційних табличок - чи заплановані дії, якщо так - то на коли. Якщо ні - то що заважає?<br>наприклад: великий напис Кондратюка 7 вже вигорів; дит. садок давно виїхав вивіска висить. І такого багато</div><div class="full-author">Valerii Romanskyi (<a href="https://t.me/romsky_v" target="_blank" rel="noopener">@romsky_v</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-postponed">ВІДКЛАДЕНО</span></div>
   <div class="a">На сьогодняшній день питання не є пріоритетним</div>
 </div>
 
 <div class="card" id="q33">
-  <div class="q"><a class="qnum" href="#q33">#33</a>&nbsp; Заборона вигулу собак на газонах</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q33">#33</a>&nbsp; Заборона вигулу собак на газонах</span><button class="info-btn" type="button" data-target="q33" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи можливо заборонити вигул песиків на газонах?<br>Зробити об'яви про заборону вигулу на зеленій зоні та дублювання цієї інформації в телеграм каналі?</div><div class="full-author">Mariia Bozhkova</div><div class="full-date">10.03.2026</div></div>
   <div class="badges"><span class="badge status-unresolved">НЕМАЄ РІШЕННЯ</span><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Ні ККК, ні будь-хто по закону України немає таких повноважень.<br><br>Садівник пару тижнів тому вже жалівся, що три клумби, зроблені в цьому році, «вбиті» сечею собак<br>Є факти коли діти їдуть на велосипедах / самокатах на клумби / прямо через рози<br><br>Впливу на ситуацію у ККК немає</div>
 </div>
 
 <div class="card" id="q9">
-  <div class="q"><a class="qnum" href="#q9">#9</a>&nbsp; Прибирання на паркінгу (бруд, земля)</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q9">#9</a>&nbsp; Прибирання на паркінгу (бруд, земля)</span><button class="info-btn" type="button" data-target="q9" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Коли буде прибирання в паркінгу - там дуже багато землі/бруду</div><div class="full-author">Vladyslav</div><div class="full-date">27.02.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-monitoring">НА КОНТРОЛІ</span></div>
   <div class="a">Після ремонту машини для прибирання - паркінг прибрано. Також виконується періодичне планове прибирання.</div>
 </div>
 
 <div class="card" id="q29">
-  <div class="q"><a class="qnum" href="#q29">#29</a>&nbsp; Постійне протікання на нижньому ярусі паркінгу</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q29">#29</a>&nbsp; Постійне протікання на нижньому ярусі паркінгу</span><button class="info-btn" type="button" data-target="q29" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Нижній ярус, поряд з 234 місцем. Постійно капає вже роками! <br>Які дії плануються і в які терміни</div><div class="full-author">Юрій</div><div class="full-date">07.03.2026</div></div>
   <div class="badges"><span class="badge status-postponed">ВІДКЛАДЕНО</span><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Гідроізоляція по планам працює 8 років.<br>Глобально потрібно знімати всю землю над паркінгом і проводити відновлюванні роботи.<br><br>Поточний ремонт коштує приблизно 700 тис грн (цінами на весну).<br><br>Наразі питання не саме пріоритетне</div>
 </div>
 
 <div class="card" id="q1">
-  <div class="q"><a class="qnum" href="#q1">#1</a>&nbsp; Подальші дії по генератору</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q1">#1</a>&nbsp; Подальші дії по генератору</span><button class="info-btn" type="button" data-target="q1" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Які подальші дії по генератору</div><div class="full-author">Дмитро Г (<a href="https://t.me/TouristXXL" target="_blank" rel="noopener">@TouristXXL</a>)</div><div class="full-date">27.02.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span><span class="badge status-info">ІНФОРМАЦІЯ</span></div>
   <div class="a">Генератор закуплено, підключено, протестовано.<br>Звіт по витраченим / зібраним від мешканців коштам надано, подивитися можна <a href="https://t.me/c/1169086131/22643">за посиланням</a></div>
 </div>
 
 <div class="card" id="q19">
-  <div class="q"><a class="qnum" href="#q19">#19</a>&nbsp; Звіт по активностях за 2025 рік</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q19">#19</a>&nbsp; Звіт по активностях за 2025 рік</span><button class="info-btn" type="button" data-target="q19" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Прохання надати звіт по запланованим на 2025 рік активностям. <br>Що було зроблено, що ні. Для тих дій, які не були зроблені - прохання зазначити причину, чому не вийшло виконати заплановане</div><div class="full-author">Анастасія Черних (<a href="https://t.me/Bariwayka" target="_blank" rel="noopener">@Bariwayka</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-done">ЗРОБЛЕНО</span></div>
   <div class="a">Звіт за 2025 рік було надано в офіційному каналі ККК</div>
 </div>
 
 <div class="card" id="q20">
-  <div class="q"><a class="qnum" href="#q20">#20</a>&nbsp; Перелік робіт по будинку до 01.06</div>
+  <div class="q"><span class="q-text"><a class="qnum" href="#q20">#20</a>&nbsp; Перелік робіт по будинку до 01.06</span><button class="info-btn" type="button" data-target="q20" aria-label="Повна інформація" title="Повна інформація">i</button></div>
+<div class="full-details" hidden><div class="full-q">Чи є перелік робіт по будинку що планується робити найближчим часом - а саме весною, до 01.06</div><div class="full-author">Іnga (<a href="https://t.me/Inga77777" target="_blank" rel="noopener">@Inga77777</a>)</div><div class="full-date">03.03.2026</div></div>
   <div class="badges"><span class="badge status-planned">В ПЛАНАХ</span><span class="badge status-inprogress">В РОБОТІ</span></div>
   <div class="a">Роботи виконувалися в щоденному операційному режимі.<br><br>Заплановано на найближчий час:<br>- оновити розмітку пішоходних переходів<br>- фарбуванння дверей на пожежних балконах<br>- поміняти освітелення в кабінах ліфтів<br><br>Важливі задачі:<br>- обмеження місць паркування авто на прибудинковій території для проїзду спец. транспорту (пожежні і т.д.)<br>- підготовка до зими (запас солярки)</div>
 </div>
@@ -438,6 +588,21 @@
   <div class="footer">Текст відповіді — оригінальний, без скорочень.</div>
 </div>
 <div class="toast" id="toast">Посилання скопійовано</div>
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalQuestion">
+    <div class="modal-head">
+      <div>
+        <div class="modal-label">Оригінальне питання</div>
+        <div class="modal-question" id="modalQuestion"></div>
+      </div>
+      <button class="modal-close" id="modalClose" type="button" aria-label="Закрити">✕</button>
+    </div>
+    <div class="modal-meta">
+      <div class="modal-meta-item"><b>Автор</b><span id="modalAuthor"></span></div>
+      <div class="modal-meta-item"><b>Дата питання</b><span id="modalDate"></span></div>
+    </div>
+  </div>
+</div>
 <script>
   (function () {
     var chips = document.querySelectorAll('.filter-chip');
@@ -487,6 +652,48 @@
       });
     });
     applyFilter();
+  })();
+
+  (function () {
+    var overlay = document.getElementById('modalOverlay');
+    var qEl = document.getElementById('modalQuestion');
+    var authorEl = document.getElementById('modalAuthor');
+    var dateEl = document.getElementById('modalDate');
+    var closeBtn = document.getElementById('modalClose');
+    var lastFocused = null;
+
+    function openModal(card) {
+      var details = card.querySelector('.full-details');
+      if (!details) return;
+      qEl.innerHTML = details.querySelector('.full-q').innerHTML;
+      var authorHtml = details.querySelector('.full-author').innerHTML.trim();
+      authorEl.innerHTML = authorHtml || '—';
+      var dateHtml = details.querySelector('.full-date').innerHTML.trim();
+      dateEl.innerHTML = dateHtml || '—';
+      lastFocused = document.activeElement;
+      overlay.classList.add('show');
+      closeBtn.focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+      if (lastFocused) lastFocused.focus();
+    }
+
+    document.querySelectorAll('.info-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        openModal(btn.closest('.card'));
+      });
+    });
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('show')) closeModal();
+    });
   })();
 
   var toast = document.getElementById('toast');
